@@ -1,0 +1,30 @@
+﻿using Repositories.Contracts;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Repositories.EFCore
+{
+    public class RepositoryManager : IRepositoryManager
+    {
+        private readonly RepositoryContext _context;
+
+        public RepositoryManager(RepositoryContext context)
+        {
+            _context = context;
+        }
+
+        public ICarrierRepository Carrier => new CarrierRepository(_context);
+
+        public ICarrierConfigurationRepository CarrierConfiguration => new CarrierConfigurationRepository(_context);
+
+        public IOrderRepository Order => new OrderRepository(_context);
+
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
+    }
+}
